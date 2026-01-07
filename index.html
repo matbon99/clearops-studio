@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="ClearOps Studio: localizzazione testi per mercati esteri, report da meeting/recensioni, mini-corsi AI per team. Consegne rapide e revisione inclusa." />
-  <title>ClearOps Studio — Servizi AI per aziende</title>
+  <meta name="description" content="ClearOps Studio: prodotti digitali rapidi creati con AI. Traduzione 1 pagina (€29) e Riscrittura 1 pagina (€39). Consegna 48h e 1 revisione inclusa." />
+  <title>ClearOps Studio — Prodotti rapidi con AI</title>
 
   <style>
     :root{
@@ -17,11 +17,11 @@
       --border: rgba(255,255,255,.10);
       --shadow: 0 12px 30px rgba(0,0,0,.35);
       --radius: 18px;
-      --max: 1100px;
+      --max: 1120px;
     }
     *{box-sizing:border-box}
-    html,body{margin:0}
     body{
+      margin:0;
       font-family: system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,sans-serif;
       color: var(--text);
       background:
@@ -35,7 +35,7 @@
     header{
       position: sticky; top:0; z-index: 20;
       backdrop-filter: blur(10px);
-      background: rgba(11,15,26,.70);
+      background: rgba(11,15,26,.72);
       border-bottom: 1px solid var(--border);
     }
     .nav{
@@ -47,7 +47,7 @@
       justify-content:space-between;
       gap:16px;
     }
-    .brand{display:flex; align-items:center; gap:10px; font-weight:800; letter-spacing:.2px}
+    .brand{display:flex; align-items:center; gap:10px; font-weight:800; letter-spacing:.2px; cursor:pointer}
     .logo{
       width:36px;height:36px;border-radius:14px;
       background: linear-gradient(135deg,var(--accent),var(--accent2));
@@ -69,21 +69,27 @@
       color: var(--text);
       cursor: pointer;
       box-shadow: 0 8px 18px rgba(0,0,0,.25);
+      gap:8px;
+      white-space: nowrap;
     }
     .btn:hover{transform: translateY(-1px)}
     .btn.primary{
       border: none;
       background: linear-gradient(135deg, var(--accent), #9a7bff);
     }
-    .hero{padding: 44px 0 18px}
+    .btn.light{
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.04);
+    }
+    .hero{padding: 40px 0 12px}
     .grid{display:grid; gap: 18px}
-    @media(min-width: 920px){
+    @media(min-width: 940px){
       .grid.heroGrid{grid-template-columns: 1.3fr .7fr; align-items: stretch}
       .grid.cards{grid-template-columns: repeat(3, 1fr)}
       .grid.two{grid-template-columns: 1fr 1fr}
     }
     .card{
-      background: rgba(18,26,43,.80);
+      background: rgba(18,26,43,.82);
       border: 1px solid var(--border);
       border-radius: var(--radius);
       box-shadow: var(--shadow);
@@ -108,36 +114,37 @@
       color: var(--text);
     }
     .section{padding: 22px 0}
-    .kpi{
-      display:grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap:10px;
-      margin-top: 10px;
-    }
-    .stat{
-      padding: 12px;
-      border-radius: 16px;
-      border: 1px solid var(--border);
-      background: rgba(255,255,255,.04);
-    }
-    .stat b{display:block; font-size: 18px; color: var(--text)}
-    .muted{color: var(--muted)}
     ul{margin: 10px 0 0 18px; color: var(--muted)}
     li{margin: 6px 0}
-    .hr{
-      height:1px;
-      background: var(--border);
-      margin: 14px 0;
-    }
-    .price{
-      display:flex; align-items:baseline; justify-content:space-between; gap: 10px;
+    .hr{height:1px; background: var(--border); margin: 14px 0;}
+    .priceRow{
+      display:flex; align-items:flex-end; justify-content:space-between; gap: 12px;
+      margin-top: 10px;
       padding: 10px 12px;
       border-radius: 14px;
       border: 1px solid var(--border);
       background: rgba(255,255,255,.04);
-      margin-top: 10px;
     }
-    .price .tag{font-size: 13px; color: var(--muted)}
+    .priceRow b{font-size: 18px}
+    .tag{font-size: 13px; color: var(--muted)}
+    .actions{display:flex; gap:10px; flex-wrap:wrap; margin-top: 10px}
+    .badge{
+      display:inline-block;
+      font-size: 12px;
+      padding: 5px 8px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,.05);
+      color: var(--text);
+    }
+    .note{
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.04);
+      padding: 12px;
+      border-radius: 14px;
+      color: var(--muted);
+    }
+
     form{display:grid; gap: 10px; margin-top: 10px}
     input, textarea, select{
       width:100%;
@@ -173,206 +180,155 @@
 <body>
   <header>
     <nav class="nav" aria-label="Navigazione principale">
-      <div class="brand" onclick="scrollToId('top')" style="cursor:pointer">
+      <div class="brand" onclick="scrollToId('top')">
         <div class="logo" aria-hidden="true"></div>
         <span>ClearOps Studio</span>
       </div>
 
       <div class="links">
-        <a href="#servizi">Servizi</a>
-        <a href="#pacchetti">Pacchetti</a>
-        <a href="#processo">Processo</a>
+        <a href="#prodotti">Prodotti</a>
+        <a href="#come-funziona">Come funziona</a>
+        <a href="#faq">FAQ</a>
         <a href="#contatti">Contatti</a>
       </div>
 
-      <button class="btn primary" onclick="scrollToId('contatti')">Richiedi preventivo</button>
+      <button class="btn primary" onclick="scrollToId('prodotti')">Vedi prezzi</button>
     </nav>
   </header>
 
   <main class="wrap">
-    <!-- HERO -->
     <section id="top" class="hero">
       <div class="grid heroGrid">
         <div class="card">
-          <h1>Servizi AI per aziende: localizzazione, report e formazione team.</h1>
+          <h1>2 prodotti semplici e utili (con AI), consegna rapida.</h1>
           <p class="lead">
-            Usiamo l’AI per accelerare e la revisione umana per garantire qualità.
-            Output chiari, pronti da usare, con revisioni incluse.
+            Se ti serve una pagina in un’altra lingua o vuoi riscrivere una pagina che “non vende”,
+            qui hai due prodotti chiari, prezzi bassi e consegna veloce.
           </p>
-
-          <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:10px">
-            <button class="btn primary" onclick="scrollToId('pacchetti')">Vedi i pacchetti</button>
-            <button class="btn" onclick="scrollToId('servizi')">Scopri i servizi</button>
+          <div class="actions">
+            <button class="btn primary" onclick="scrollToId('prodotti')">Scegli un prodotto</button>
+            <button class="btn light" onclick="scrollToId('contatti')">Domanda veloce</button>
           </div>
-
-          <div class="pillRow" aria-label="Punti chiave">
-            <span class="pill">AI + revisione umana</span>
-            <span class="pill">Tempi rapidi</span>
-            <span class="pill">Output operativi</span>
-            <span class="pill">Revisioni incluse</span>
-          </div>
-
-          <div class="kpi" aria-label="Indicatori">
-            <div class="stat"><b>48–72h</b><span class="muted">prime consegne (tipiche)</span></div>
-            <div class="stat"><b>3</b><span class="muted">servizi principali</span></div>
-            <div class="stat"><b>1</b><span class="muted">pagina (alta conversione)</span></div>
+          <div class="pillRow">
+            <span class="pill">Consegna 48h</span>
+            <span class="pill">1 revisione inclusa</span>
+            <span class="pill">Pagamento PayPal</span>
           </div>
         </div>
 
         <div class="card">
-          <h2>Perfetto se vuoi…</h2>
+          <h2>Come funziona</h2>
           <ul>
-            <li>Adattare contenuti a mercati esteri (EN-US/EN-UK, FR, DE, ES)</li>
-            <li>Trasformare meeting e recensioni in decisioni e azioni</li>
-            <li>Allineare il team con prompt, template e workflow replicabili</li>
+            <li>Scegli prodotto</li>
+            <li>Paghi con PayPal</li>
+            <li>Clicchi “Ho già pagato” e invii il materiale</li>
+            <li>Ricevi la consegna via email</li>
           </ul>
-
           <div class="hr"></div>
-
-          <h3>Risposta rapida</h3>
-          <p class="muted">Di solito rispondiamo entro 24h lavorative con una proposta chiara.</p>
-          <button class="btn primary" onclick="scrollToId('contatti')">Scrivici ora</button>
+          <div class="note">
+            <b>Consiglio:</b> nel messaggio incolla il testo o un link (Google Doc / sito).
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- SERVIZI -->
-    <section id="servizi" class="section">
-      <h2>Servizi</h2>
-      <p>Tre servizi “core”, fattibili con AI ma curati per qualità e coerenza.</p>
+    <section id="prodotti" class="section">
+      <h2>Prodotti</h2>
+      <p>Paghi e poi compili il form con l’ID + materiale. Consegna tipica: 48h.</p>
 
       <div class="grid cards">
+        <!-- Traduzione 1 pagina -->
         <div class="card">
-          <h3>Traduzioni + localizzazione</h3>
-          <p>Non solo traduzione: adattiamo tono, terminologia e CTA al mercato di destinazione.</p>
+          <h3>Traduzione 1 pagina</h3>
+          <p>Traduzione + adattamento (tono/CTA). Ideale per Home / Servizi / About.</p>
           <ul>
-            <li>Mercati: EN-US, EN-UK, FR, DE, ES</li>
-            <li>Siti web, e-commerce, email, documenti</li>
-            <li>Formati locali: date/valute/unità di misura</li>
+            <li>1 lingua: EN / FR / DE / ES</li>
+            <li>Fino a ~600 parole</li>
+            <li>1 revisione inclusa</li>
           </ul>
+          <div class="priceRow">
+            <div><b>€29</b><div class="tag">48h</div></div>
+            <span class="badge">ID: TR-29</span>
+          </div>
+          <div class="actions">
+            <a class="btn primary" href="https://www.paypal.com/ncp/payment/PJ5NPKYTZCXHA" target="_blank" rel="noopener">Paga ora</a>
+            <button class="btn" onclick="prefill('Traduzione 1 pagina (TR-29)')">Ho già pagato</button>
+          </div>
+          <div class="small">Cosa inviare: testo o link + lingua desiderata.</div>
         </div>
 
+        <!-- Riscrittura 1 pagina -->
         <div class="card">
-          <h3>Analisi & report</h3>
-          <p>Da contenuti complessi a report chiari: decisioni, priorità, quick wins.</p>
+          <h3>Riscrittura 1 pagina</h3>
+          <p>Rendiamo una pagina più chiara e più “che vende” (headline, struttura, CTA).</p>
           <ul>
-            <li>Meeting/trascrizioni, recensioni, survey, ticket</li>
-            <li>Executive summary + azioni consigliate</li>
-            <li>Temi ricorrenti e insight clienti</li>
+            <li>1 pagina: Home / Servizi / About</li>
+            <li>Riscrittura + struttura consigliata</li>
+            <li>1 revisione inclusa</li>
           </ul>
+          <div class="priceRow">
+            <div><b>€39</b><div class="tag">48h</div></div>
+            <span class="badge">ID: RW-39</span>
+          </div>
+          <div class="actions">
+            <a class="btn primary" href="https://www.paypal.com/ncp/payment/26P3TXNXD2PCE" target="_blank" rel="noopener">Paga ora</a>
+            <button class="btn" onclick="prefill('Riscrittura 1 pagina (RW-39)')">Ho già pagato</button>
+          </div>
+          <div class="small">Cosa inviare: link pagina attuale + obiettivo (lead/vendite/info).</div>
         </div>
+      </div>
 
-        <div class="card">
-          <h3>Mini-corsi / guide per team</h3>
-          <p>Formazione pratica per usare l’AI in modo replicabile, con controlli qualità.</p>
-          <ul>
-            <li>Prompt pronti per ruolo (marketing/sales/support)</li>
-            <li>Workflow standard + checklist</li>
-            <li>Esercizi e materiali pronti all’uso</li>
-          </ul>
-        </div>
+      <div class="note" style="margin-top:16px">
+        <b>Nota:</b> se vuoi più pagine, nel form scrivi “pacchetto multipagina” e ti facciamo un prezzo.
       </div>
     </section>
 
-    <!-- PACCHETTI -->
-    <section id="pacchetti" class="section">
-      <h2>Pacchetti</h2>
-      <p>Prezzi “da” (personalizzabili). Ogni pacchetto include una revisione.</p>
-
-      <div class="grid cards">
-        <div class="card">
-          <h3>Pack A — Localizzazione Essenziale</h3>
-          <p class="muted">Perfetto per pagine web, schede prodotto, email e documenti brevi.</p>
-          <div class="price">
-            <div>
-              <b>da €149</b>
-              <div class="tag">1 lingua • 48–72h standard</div>
-            </div>
-            <button class="btn primary" onclick="prefill('Localizzazione Essenziale')">Richiedi</button>
-          </div>
-          <ul>
-            <li>Fino a ~1.200 parole (modificabile)</li>
-            <li>Adattamento tono/CTA + formati locali</li>
-            <li>1 revisione inclusa</li>
-          </ul>
-        </div>
-
-        <div class="card">
-          <h3>Pack B — Report Decisionale</h3>
-          <p class="muted">Da meeting/recensioni a insight e azioni concrete.</p>
-          <div class="price">
-            <div>
-              <b>da €199</b>
-              <div class="tag">24–48h • output PDF/Doc</div>
-            </div>
-            <button class="btn primary" onclick="prefill('Report Decisionale')">Richiedi</button>
-          </div>
-          <ul>
-            <li>1 meeting trascritto <span class="muted">oppure</span> dataset recensioni</li>
-            <li>Executive summary + priorità + quick wins</li>
-            <li>1 revisione inclusa</li>
-          </ul>
-        </div>
-
-        <div class="card">
-          <h3>Pack C — Mini-corso Team</h3>
-          <p class="muted">Formazione pratica su prompt e workflow per il tuo team.</p>
-          <div class="price">
-            <div>
-              <b>da €499</b>
-              <div class="tag">60–90 min • materiali inclusi</div>
-            </div>
-            <button class="btn primary" onclick="prefill('Mini-corso Team')">Richiedi</button>
-          </div>
-          <ul>
-            <li>Sessione live + esercizi (online)</li>
-            <li>20–30 prompt personalizzati per ruolo</li>
-            <li>Workflow + checklist qualità</li>
-          </ul>
-        </div>
-      </div>
-    </section>
-
-    <!-- PROCESSO -->
-    <section id="processo" class="section">
-      <h2>Come funziona</h2>
-      <p>Processo semplice, pensato per consegne veloci e qualità costante.</p>
-
+    <section id="come-funziona" class="section">
+      <h2>Come funziona (dettaglio)</h2>
       <div class="grid two">
         <div class="card">
-          <h3>1) Brief (10–15 min)</h3>
-          <p>Obiettivo, pubblico, mercati/lingue o fonti da analizzare. Definiamo output e tempistiche.</p>
-
-          <h3 style="margin-top:14px">2) Setup</h3>
-          <p>Glossario/tono (localizzazione) oppure schema report (analisi) oppure obiettivi didattici (corso).</p>
+          <h3>1) Pagamento</h3>
+          <p>Paghi con PayPal dal bottone del prodotto.</p>
+          <h3 style="margin-top:14px">2) Materiale</h3>
+          <p>Compili il form con ID prodotto + testo/link + lingua o obiettivo.</p>
         </div>
-
         <div class="card">
-          <h3>3) Produzione + controlli qualità</h3>
-          <p>Bozza rapida con AI, poi controlli su coerenza, chiarezza, stile e “fatti”.</p>
-
-          <h3 style="margin-top:14px">4) Revisione + consegna</h3>
-          <p>Una revisione inclusa. Consegniamo file finali e, quando utile, template riutilizzabili.</p>
+          <h3>3) Consegna</h3>
+          <p>Consegna tipica in 48h (salvo quantità molto grandi).</p>
+          <h3 style="margin-top:14px">4) Revisione</h3>
+          <p>1 revisione inclusa entro 7 giorni dalla consegna.</p>
         </div>
       </div>
     </section>
 
-    <!-- CONTATTI -->
+    <section id="faq" class="section">
+      <h2>FAQ</h2>
+      <div class="grid two">
+        <div class="card">
+          <h3>Posso chiedere uno stile specifico?</h3>
+          <p>Sì. Scrivi nel form: “tono formale / tecnico / commerciale / semplice”.</p>
+          <h3 style="margin-top:14px">Che formato ricevo?</h3>
+          <p>Di solito testo incollato in email + file .doc/.txt su richiesta.</p>
+        </div>
+        <div class="card">
+          <h3>Serve una call?</h3>
+          <p>No, per questi prodotti basta materiale chiaro.</p>
+          <h3 style="margin-top:14px">Dati sensibili?</h3>
+          <p>Evita dati personali non necessari. Se serve, anonimizza.</p>
+        </div>
+      </div>
+    </section>
+
     <section id="contatti" class="section">
-      <h2>Contatti</h2>
-      <p>Compila il form: rispondiamo con proposta e tempi.</p>
+      <h2>Invio materiale / richiesta</h2>
+      <p>Hai già pagato? Inserisci l’ID (TR-29 o RW-39) e incolla testo/link.</p>
 
       <div class="card">
         <div id="successNotice" class="notice">
           ✅ Richiesta inviata! Ti risponderemo entro 24 ore lavorative.
         </div>
 
-        <form
-          id="contactForm"
-          action="https://formspree.io/f/xaqnrdae"
-          method="POST"
-        >
-          <!-- Opzioni Formspree -->
+        <form id="contactForm" action="https://formspree.io/f/xaqnrdae" method="POST">
           <input type="hidden" name="_subject" value="Nuova richiesta dal sito — ClearOps Studio">
           <input type="hidden" name="_template" value="table">
 
@@ -389,40 +345,48 @@
 
           <div class="grid two">
             <div>
-              <label class="small" for="servizio">Servizio</label>
-              <select id="servizio" name="servizio" required>
+              <label class="small" for="tipo">Tipo richiesta</label>
+              <select id="tipo" name="tipo" required>
                 <option value="" selected disabled>Seleziona…</option>
-                <option>Localizzazione</option>
-                <option>Analisi & Report</option>
-                <option>Mini-corso / Guida Team</option>
+                <option>Ho pagato un prodotto</option>
+                <option>Richiesta multipagina</option>
+                <option>Domanda</option>
               </select>
             </div>
             <div>
-              <label class="small" for="mercato">Mercato/lingua o fonte (opzionale)</label>
-              <input id="mercato" name="mercato" placeholder="Es. EN-US / FR / 200 recensioni / call 45 min" />
+              <label class="small" for="idprodotto">ID prodotto</label>
+              <input id="idprodotto" name="idprodotto" placeholder="TR-29 oppure RW-39" />
+            </div>
+          </div>
+
+          <div class="grid two">
+            <div>
+              <label class="small" for="lingua">Lingua / obiettivo (opzionale)</label>
+              <input id="lingua" name="lingua" placeholder="Es. EN-UK / FR oppure 'più vendite / più lead'" />
+            </div>
+            <div>
+              <label class="small" for="scadenza">Scadenza (opzionale)</label>
+              <input id="scadenza" name="scadenza" placeholder="Es. entro 48h" />
             </div>
           </div>
 
           <div>
-            <label class="small" for="messaggio">Messaggio</label>
-            <textarea id="messaggio" name="messaggio" required placeholder="Descrivi cosa ti serve, tempi e materiale disponibile…"></textarea>
+            <label class="small" for="messaggio">Materiale / messaggio</label>
+            <textarea id="messaggio" name="messaggio" required placeholder="Incolla testo o link alla pagina, e scrivi cosa vuoi ottenere…"></textarea>
           </div>
 
-          <button class="btn primary" type="submit">Invia richiesta</button>
-          <div class="small">Suggerimento: se puoi, incolla un esempio di testo o un link al materiale.</div>
+          <button class="btn primary" type="submit">Invia</button>
+          <div class="small">I dati inviati vengono usati solo per rispondere alla richiesta.</div>
         </form>
       </div>
     </section>
 
     <footer>
-      <div class="small">
-        © <span id="year"></span> ClearOps Studio — Servizi AI per aziende
-      </div>
+      <div class="small">© <span id="year"></span> ClearOps Studio</div>
     </footer>
   </main>
 
   <script>
-    // anno footer
     document.getElementById("year").textContent = new Date().getFullYear();
 
     function scrollToId(id){
@@ -431,27 +395,26 @@
       el.scrollIntoView({behavior:"smooth", block:"start"});
     }
 
-    // Prefill del form dai pacchetti
-    function prefill(packName){
+    function prefill(text){
       scrollToId("contatti");
-      const servizio = document.getElementById("servizio");
-      const messaggio = document.getElementById("messaggio");
+      const tipo = document.getElementById("tipo");
+      const idp = document.getElementById("idprodotto");
+      const msg = document.getElementById("messaggio");
 
-      if(packName.includes("Localizzazione")) servizio.value = "Localizzazione";
-      else if(packName.includes("Report")) servizio.value = "Analisi & Report";
-      else servizio.value = "Mini-corso / Guida Team";
+      if(tipo) tipo.value = "Ho pagato un prodotto";
 
-      if(messaggio && !messaggio.value){
-        messaggio.value =
-          "Ciao! Mi interessa il pacchetto \"" + packName + "\".\n" +
-          "Materiale disponibile: (link/testo/CSV/trascrizione)\n" +
-          "Tempistiche desiderate:\n" +
+      const m = text.match(/\(([A-Z]{2}-\d{2})\)/);
+      if(m && idp) idp.value = m[1];
+
+      if(msg && !msg.value){
+        msg.value =
+          "Ciao! Ho pagato: " + text + ".\n" +
+          "Ecco il testo/link:\n\n" +
+          "Lingua/obiettivo:\n" +
           "Note:";
       }
     }
 
-    // Messaggio di successo in pagina (senza cambiare la tua UX)
-    // Se torni con ?success=1, mostra banner e pulisce l'URL.
     (function(){
       const url = new URL(window.location.href);
       if(url.searchParams.get("success") === "1"){
@@ -462,8 +425,6 @@
       }
     })();
 
-    // Intercetta submit: invia, poi torna alla pagina con ?success=1
-    // (mantiene tutto in 1 pagina, senza pagina esterna)
     document.getElementById("contactForm").addEventListener("submit", async function(e){
       e.preventDefault();
       const form = e.target;
@@ -478,7 +439,6 @@
 
         if(res.ok){
           form.reset();
-          // torna alla stessa pagina e mostra banner
           const url = new URL(window.location.href);
           url.searchParams.set("success","1");
           window.location.href = url.toString() + "#contatti";
@@ -492,4 +452,3 @@
   </script>
 </body>
 </html>
-
