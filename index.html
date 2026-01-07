@@ -1,133 +1,102 @@
 <!doctype html>
 <html lang="it">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>ClearOps Studio — Ordine servizi</title>
-
-<style>
-body{
-  margin:0;
-  font-family:system-ui, sans-serif;
-  background:#0b0f1a;
-  color:#e8eefc;
-}
-.wrap{max-width:900px;margin:auto;padding:24px}
-.card{
-  background:#121a2b;
-  border-radius:16px;
-  padding:20px;
-  margin-bottom:20px;
-}
-h1,h2,h3{margin-top:0}
-.btn{
-  padding:12px 16px;
-  border-radius:12px;
-  border:none;
-  cursor:pointer;
-  background:#6ea8fe;
-  color:#000;
-  font-weight:600;
-}
-input,textarea,select{
-  width:100%;
-  padding:12px;
-  border-radius:12px;
-  border:none;
-  margin-top:6px;
-  margin-bottom:12px;
-}
-textarea{min-height:140px}
-.hidden{display:none}
-.small{font-size:13px;color:#a9b6d6}
-</style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ClearOps Studio — Ordina</title>
+  <style>
+    :root{--bg:#0b0f1a;--card:#121a2b;--text:#e8eefc;--muted:#a9b6d6;--border:rgba(255,255,255,.10);--r:16px;}
+    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:var(--bg);color:var(--text);line-height:1.5}
+    .wrap{max-width:900px;margin:0 auto;padding:24px}
+    .card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:18px;margin:14px 0}
+    h1,h2{margin:0 0 10px}
+    p{margin:0 0 12px;color:var(--muted)}
+    label{display:block;margin:10px 0 6px;color:var(--muted);font-size:13px}
+    input,select,textarea{width:100%;padding:12px;border-radius:12px;border:1px solid var(--border);background:rgba(255,255,255,.04);color:var(--text);outline:none}
+    textarea{min-height:140px;resize:vertical}
+    .row{display:grid;gap:12px}
+    @media(min-width:820px){.row{grid-template-columns:1fr 1fr}}
+    .btn{display:inline-flex;align-items:center;justify-content:center;padding:12px 14px;border-radius:12px;border:1px solid var(--border);background:rgba(255,255,255,.06);color:var(--text);cursor:pointer;font-weight:600}
+    .btn.primary{border:none;background:linear-gradient(135deg,#6ea8fe,#9a7bff);color:#0b0f1a}
+    .small{font-size:13px;color:var(--muted)}
+    .note{padding:12px;border-radius:12px;border:1px solid rgba(255,195,66,.35);background:rgba(255,195,66,.08);color:var(--muted)}
+  </style>
 </head>
-
 <body>
-<div class="wrap">
+  <div class="wrap">
+    <div class="card">
+      <h1>Ordina il tuo servizio</h1>
+      <p>Prima invii le info (testo / file), poi ti portiamo al pagamento.</p>
+      <div class="note"><b>Importante:</b> l’ordine parte solo dopo il pagamento PayPal.</div>
+    </div>
 
-<h1>Ordina il tuo servizio</h1>
-<p class="small">Inserisci prima le informazioni, poi procedi al pagamento.</p>
+    <div class="card">
+      <h2>1) Scegli prodotto</h2>
 
-<!-- SCELTA PRODOTTO -->
-<div class="card">
-<h2>Scegli prodotto</h2>
-<select id="prodotto" onchange="selectProduct()" required>
-  <option value="">Seleziona…</option>
-  <option value="TR-29">Traduzione 1 pagina — €29</option>
-  <option value="RW-39">Riscrittura 1 pagina — €39</option>
-</select>
-</div>
+      <!--
+        NOTA: redirect a grazie.html con ?p=...
+        (GitHub Pages: URL relativo funziona)
+      -->
+      <form id="orderForm"
+            action="https://formspree.io/f/xaqnrdae"
+            method="POST"
+            enctype="multipart/form-data">
 
-<!-- FORM -->
-<div class="card hidden" id="orderForm">
-<h2>Inserisci le informazioni</h2>
+        <input type="hidden" name="_subject" value="Nuovo ordine — ClearOps Studio">
+        <!-- redirect: la impostiamo via JS in base al prodotto selezionato -->
+        <input type="hidden" name="_redirect" id="redirectField" value="grazie.html?p=TR-29">
 
-<form id="form"
- action="https://formspree.io/f/xaqnrdae"
- method="POST"
- enctype="multipart/form-data">
+        <label for="prodotto">Prodotto</label>
+        <select id="prodotto" name="prodotto" required>
+          <option value="" selected disabled>Seleziona…</option>
+          <option value="TR-29">Traduzione 1 pagina — €29 (ID: TR-29)</option>
+          <option value="RW-39">Riscrittura 1 pagina — €39 (ID: RW-39)</option>
+        </select>
 
-<input type="hidden" name="prodotto" id="prodottoField">
-<input type="hidden" name="_subject" value="Nuovo ordine — ClearOps Studio">
+        <div class="row">
+          <div>
+            <label for="nome">Nome</label>
+            <input id="nome" name="nome" required placeholder="Il tuo nome">
+          </div>
+          <div>
+            <label for="email">Email</label>
+            <input id="email" type="email" name="email" required placeholder="nome@azienda.com">
+          </div>
+        </div>
 
-<label>Nome</label>
-<input name="nome" required>
+        <label for="contenuto">Testo / istruzioni (incolla qui)</label>
+        <textarea id="contenuto" name="contenuto" required placeholder="Incolla testo o spiega cosa vuoi ottenere…"></textarea>
 
-<label>Email</label>
-<input type="email" name="email" required>
+        <label for="file">File (opzionale)</label>
+        <input id="file" type="file" name="file">
 
-<label>Testo o istruzioni</label>
-<textarea name="contenuto" placeholder="Incolla qui il testo oppure spiega cosa vuoi ottenere…" required></textarea>
+        <label for="note">Note extra (opzionale)</label>
+        <textarea id="note" name="note" placeholder="Lingua, tono, obiettivo, scadenza…"></textarea>
 
-<label>Carica file (opzionale)</label>
-<input type="file" name="file">
+        <button class="btn primary" type="submit">Invia info e vai al pagamento</button>
+        <div class="small" style="margin-top:10px">Dopo l’invio atterrerai su una pagina “Grazie” con il link PayPal giusto.</div>
+      </form>
+    </div>
 
-<label>Note aggiuntive</label>
-<textarea name="note" placeholder="Tono, lingua, obiettivo, scadenza…"></textarea>
+    <div class="card">
+      <h2>Consegna</h2>
+      <p class="small">Tipicamente 48h + 1 revisione inclusa (entro 7 giorni dalla consegna).</p>
+    </div>
+  </div>
 
-<button class="btn" type="submit">Vai al pagamento</button>
-</form>
+  <script>
+    // Imposta la redirect in base al prodotto scelto (così grazie.html sa quale PayPal mostrare)
+    const prodotto = document.getElementById("prodotto");
+    const redirectField = document.getElementById("redirectField");
 
-<p class="small">
-Dopo l’invio verrai reindirizzato a PayPal per completare il pagamento.
-</p>
-</div>
-
-</div>
-
-<script>
-const PAYPAL = {
-  "TR-29": "https://www.paypal.com/ncp/payment/PJ5NPKYTZCXHA",
-  "RW-39": "https://www.paypal.com/ncp/payment/26P3TXNXD2PCE"
-};
-
-function selectProduct(){
-  const p = document.getElementById("prodotto").value;
-  if(!p) return;
-  document.getElementById("orderForm").classList.remove("hidden");
-  document.getElementById("prodottoField").value = p;
-}
-
-document.getElementById("form").addEventListener("submit", async function(e){
-  e.preventDefault();
-  const form = e.target;
-  const data = new FormData(form);
-
-  const res = await fetch(form.action, {
-    method:"POST",
-    body:data,
-    headers:{ "Accept":"application/json" }
-  });
-
-  if(res.ok){
-    const prodotto = document.getElementById("prodottoField").value;
-    window.location.href = PAYPAL[prodotto];
-  }else{
-    alert("Errore invio dati. Riprova.");
-  }
-});
-</script>
-
+    function updateRedirect(){
+      const p = prodotto.value || "TR-29";
+      // redirect relativo: grazie.html?p=TR-29 o RW-39
+      redirectField.value = "grazie.html?p=" + encodeURIComponent(p);
+    }
+    prodotto.addEventListener("change", updateRedirect);
+    updateRedirect();
+  </script>
 </body>
 </html>
+
