@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>WOT Boost Lab — Ordine</title>
+  <title>WoT Stat Boost Lab — Ordine</title>
   <style>
     :root{--bg:#0b0f1a;--card:#121a2b;--text:#e8eefc;--muted:#a9b6d6;--border:rgba(255,255,255,.10);--r:16px;}
     body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:var(--bg);color:var(--text);line-height:1.5}
@@ -27,28 +27,24 @@
 <div class="wrap">
   <div class="card">
     <h1>Ordine</h1>
-    <p>Compila i dettagli (tank/obiettivo/orari), poi paga. La sessione avviene su Discord in plotone o review.</p>
+    <p>Compila i dettagli (server, obiettivo, tank, link stats/replay), poi paga. Sessione su Discord.</p>
     <div class="note"><b>Account safety:</b> non chiediamo password o accesso all’account.</div>
     <p class="small" style="margin-top:10px"><a class="btn" href="index.html">← Torna alla home</a></p>
   </div>
 
   <div class="card">
-    <h2>Pagamento</h2>
-    <p class="small" id="payInfo">Seleziona un prodotto</p>
-    <!-- Metti qui i tuoi link PayPal/Stripe. Per ora placeholder -->
-    <a id="payBtn" class="btn primary" href="#" target="_blank" rel="noopener">Paga ora</a>
+    <h2>1) Pagamento</h2>
+    <p class="small" id="payInfo"></p>
+    <a id="payBtn" class="btn primary" href="#" target="_blank" rel="noopener">Paga con PayPal</a>
     <div class="ok" style="margin-top:12px">
-      Dopo il pagamento, ti contattiamo via email per fissare orario e Discord.
-    </div>
-    <div class="small" style="margin-top:10px">
-      (Qui devi incollare i tuoi link PayPal per ogni prodotto, come hai fatto prima.)
+      Dopo il pagamento, invia i dettagli qui sotto (o inviali subito: iniziamo solo dopo pagamento).
     </div>
   </div>
 
   <div class="card">
-    <h2>Invia dettagli</h2>
+    <h2>2) Invia dettagli</h2>
     <form action="https://formspree.io/f/xaqnrdae" method="POST">
-      <input type="hidden" name="_subject" value="Nuovo ordine WoT — WOT Boost Lab">
+      <input type="hidden" name="_subject" value="Nuovo ordine WoT — Stat Boost Lab">
       <input type="hidden" name="_template" value="table">
       <input type="hidden" name="_redirect" id="redirectField">
       <input type="hidden" name="product_id" id="productField">
@@ -80,17 +76,20 @@
         </div>
       </div>
 
-      <label for="tankpool">Tank / ruolo / tier (se rilevante)</label>
-      <textarea id="tankpool" name="tankpool" placeholder="Es. medium T8, preferisco mappe aperte, ecc."></textarea>
+      <label for="goal">Obiettivo (statistiche)</label>
+      <textarea id="goal" name="goal" required placeholder="Es. aumentare WR, aumentare WN8/DPG, migliorare survival, progress MoE, ecc."></textarea>
 
-      <label for="goal">Obiettivo</label>
-      <textarea id="goal" name="goal" required placeholder="Es. aumentare WR, farm crediti, farm exp, imparare posizioni, ecc."></textarea>
+      <label for="tankpool">Tank / tier / ruolo</label>
+      <textarea id="tankpool" name="tankpool" placeholder="Es. T8 medium, preferisco ridgeline, ho prem VIII X Y…"></textarea>
 
       <label for="availability">Disponibilità (giorni/orari)</label>
       <input id="availability" name="availability" placeholder="Es. lun-ven 19:00–22:00">
 
-      <label for="replaylink">Link replay / stats (opzionale)</label>
-      <input id="replaylink" name="replaylink" placeholder="Link Drive/Dropbox/WeTransfer o profilo stats">
+      <label for="links">Link utili (stats/replay) — opzionale</label>
+      <input id="links" name="links" placeholder="Link profilo stats o Drive/Dropbox/WeTransfer per replay/clip">
+
+      <label for="note">Note extra</label>
+      <textarea id="note" name="note" placeholder="Stile di gioco, problemi che noti, mappe difficili, ecc."></textarea>
 
       <button class="btn" type="submit">Invia richiesta</button>
       <div class="small" style="margin-top:10px">Dopo l’invio vai su “Grazie”.</div>
@@ -99,20 +98,15 @@
 </div>
 
 <script>
-  // IMPORTANTE: qui devi incollare i link di pagamento per ogni prodotto (PayPal/Stripe).
-  // Ora metto placeholder; appena mi dai i link, li inserisco.
+  // Mappatura prodotto -> PayPal (hai 2 link: €29 e €39)
   const PAY = {
-    "PLT-1H": { label: "Platoon Pro — 1 ora (€19)", url: "PASTE_PAY_LINK_PLT_1H" },
-    "CRD-2H": { label: "Credit Farming — 2 ore (€29)", url: "PASTE_PAY_LINK_CRD_2H" },
-    "XP-2H":  { label: "XP / Crew Farming — 2 ore (€29)", url: "PASTE_PAY_LINK_XP_2H" },
-    "REV-5":  { label: "Replay Review — 5 replay (€25)", url: "PASTE_PAY_LINK_REV_5" },
-    "PLAN-7D":{ label: "Stat Boost Plan — 7 giorni (€39)", url: "PASTE_PAY_LINK_PLAN_7D" },
-    "CUSTOM": { label: "Custom Session (da €10)", url: "PASTE_PAY_LINK_CUSTOM" }
+    "STAT-2H": { label: "Stat Boost Session — 2 ore (€29) • ID: STAT-2H", url: "https://www.paypal.com/ncp/payment/PJ5NPKYTZCXHA" },
+    "PLAN-7D": { label: "Stat Boost Plan — 7 giorni (€39) • ID: PLAN-7D", url: "https://www.paypal.com/ncp/payment/26P3TXNXD2PCE" }
   };
 
   const params = new URLSearchParams(window.location.search);
-  const p = params.get("p") || "PLT-1H";
-  const data = PAY[p] || PAY["PLT-1H"];
+  const p = params.get("p") || "STAT-2H";
+  const data = PAY[p] || PAY["STAT-2H"];
 
   document.getElementById("payInfo").textContent = data.label;
   document.getElementById("payBtn").href = data.url;
