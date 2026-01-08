@@ -4,105 +4,196 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>ClearOps Studio — Ordine</title>
-  <meta name="description" content="Pagina ordine: paga con PayPal e invia testo/file." />
+
   <style>
-    :root{--bg:#0b0f1a;--card:#121a2b;--text:#e8eefc;--muted:#a9b6d6;--border:rgba(255,255,255,.10);--r:16px;}
-    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:var(--bg);color:var(--text);line-height:1.5}
+    :root{
+      --bg:#0b0f1a;
+      --card:#121a2b;
+      --text:#e8eefc;
+      --muted:#a9b6d6;
+      --border:rgba(255,255,255,.10);
+      --r:16px;
+    }
+    body{
+      margin:0;
+      font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+      background:var(--bg);
+      color:var(--text);
+      line-height:1.5;
+    }
     .wrap{max-width:900px;margin:0 auto;padding:24px}
-    .card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:18px;margin:14px 0}
+    .card{
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:var(--r);
+      padding:18px;
+      margin:14px 0;
+    }
     h1,h2{margin:0 0 10px}
     p{margin:0 0 12px;color:var(--muted)}
-    label{display:block;margin:10px 0 6px;color:var(--muted);font-size:13px}
-    input,textarea{width:100%;padding:12px;border-radius:12px;border:1px solid var(--border);background:rgba(255,255,255,.04);color:var(--text);outline:none}
+    label{
+      display:block;
+      margin:12px 0 6px;
+      color:var(--muted);
+      font-size:13px;
+    }
+    input,textarea{
+      width:100%;
+      padding:12px;
+      border-radius:12px;
+      border:1px solid var(--border);
+      background:rgba(255,255,255,.04);
+      color:var(--text);
+      outline:none;
+    }
     textarea{min-height:140px;resize:vertical}
     .row{display:grid;gap:12px}
     @media(min-width:820px){.row{grid-template-columns:1fr 1fr}}
-    .btn{display:inline-flex;align-items:center;justify-content:center;padding:12px 14px;border-radius:12px;border:1px solid var(--border);background:rgba(255,255,255,.06);color:var(--text);cursor:pointer;font-weight:700;text-decoration:none}
-    .btn.primary{border:none;background:linear-gradient(135deg,#6ea8fe,#9a7bff);color:#0b0f1a}
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      padding:12px 14px;
+      border-radius:12px;
+      border:1px solid var(--border);
+      background:rgba(255,255,255,.06);
+      color:var(--text);
+      cursor:pointer;
+      font-weight:700;
+      text-decoration:none;
+    }
+    .btn.primary{
+      border:none;
+      background:linear-gradient(135deg,#6ea8fe,#9a7bff);
+      color:#0b0f1a;
+    }
     .small{font-size:13px;color:var(--muted)}
-    .note{padding:12px;border-radius:12px;border:1px solid rgba(255,195,66,.35);background:rgba(255,195,66,.08);color:var(--muted)}
-    .ok{padding:12px;border-radius:12px;border:1px solid rgba(126,231,135,.35);background:rgba(126,231,135,.08);color:var(--muted)}
+    .note{
+      padding:12px;
+      border-radius:12px;
+      border:1px solid rgba(255,195,66,.35);
+      background:rgba(255,195,66,.08);
+      color:var(--muted);
+    }
+    .ok{
+      padding:12px;
+      border-radius:12px;
+      border:1px solid rgba(126,231,135,.35);
+      background:rgba(126,231,135,.08);
+      color:var(--muted);
+    }
   </style>
 </head>
+
 <body>
-  <div class="wrap">
-    <div class="card">
-      <h1>Ordine</h1>
-      <p>1) Paghi con PayPal • 2) Invi testo/file • 3) Consegna tipica: 48h</p>
-      <div class="note"><b>Importante:</b> l’ordine parte solo dopo il pagamento PayPal.</div>
-      <p class="small" style="margin-top:10px"><a class="btn" href="index.html">← Torna alla home</a></p>
+<div class="wrap">
+
+  <!-- HEADER -->
+  <div class="card">
+    <h1>Ordina il tuo servizio</h1>
+    <p>
+      1) Paga con PayPal • 2) Invia testo o link al file • 3) Consegna tipica: 48h
+    </p>
+    <div class="note">
+      <b>Importante:</b> l’ordine parte solo dopo il pagamento PayPal.
     </div>
+    <p class="small" style="margin-top:10px">
+      <a class="btn" href="index.html">← Torna alla home</a>
+    </p>
+  </div>
 
-    <div class="card">
-      <h2>1) Pagamento PayPal</h2>
-      <p class="small" id="payInfo"></p>
-      <a id="payBtn" class="btn primary" target="_blank" rel="noopener">Paga con PayPal</a>
-      <div class="ok" style="margin-top:12px">
-        Dopo il pagamento, torna qui e invia il materiale (oppure invialo subito: noi iniziamo solo dopo pagamento).
-      </div>
-    </div>
-
-    <div class="card">
-      <h2>2) Invia testo / file</h2>
-
-      <form action="https://formspree.io/f/xaqnrdae"
-            method="POST"
-            enctype="multipart/form-data">
-
-        <input type="hidden" name="_subject" value="Nuovo ordine — ClearOps Studio">
-        <input type="hidden" name="_template" value="table">
-        <input type="hidden" name="_redirect" id="redirectField" value="">
-        <input type="hidden" name="prodotto" id="prodottoField" value="TR-29">
-
-        <div class="row">
-          <div>
-            <label for="nome">Nome</label>
-            <input id="nome" name="nome" required placeholder="Il tuo nome">
-          </div>
-          <div>
-            <label for="email">Email</label>
-            <input id="email" type="email" name="email" required placeholder="nome@azienda.com">
-          </div>
-        </div>
-
-        <label for="contenuto">Testo / istruzioni (incolla qui)</label>
-        <textarea id="contenuto" name="contenuto" required placeholder="Incolla testo o spiega cosa vuoi ottenere…"></textarea>
-
-        <label for="file">File (opzionale)</label>
-        <input id="file" type="file" name="file">
-
-        <label for="note">Note extra (opzionale)</label>
-        <textarea id="note" name="note" placeholder="Lingua, tono, obiettivo, scadenza…"></textarea>
-
-        <button class="btn" type="submit">Invia materiale</button>
-        <div class="small" style="margin-top:10px">Dopo l’invio vedrai una pagina “Grazie”.</div>
-      </form>
+  <!-- PAGAMENTO -->
+  <div class="card">
+    <h2>1) Pagamento PayPal</h2>
+    <p class="small" id="payInfo"></p>
+    <a id="payBtn" class="btn primary" target="_blank" rel="noopener">
+      Paga con PayPal
+    </a>
+    <div class="ok" style="margin-top:12px">
+      Dopo il pagamento, torna qui e invia il materiale
+      (oppure invialo subito: iniziamo solo dopo pagamento).
     </div>
   </div>
 
-  <script>
-    const PAYPAL = {
-      "TR-29": {
-        label: "Traduzione 1 pagina — €29 (ID: TR-29)",
-        url: "https://www.paypal.com/ncp/payment/PJ5NPKYTZCXHA"
-      },
-      "RW-39": {
-        label: "Riscrittura 1 pagina — €39 (ID: RW-39)",
-        url: "https://www.paypal.com/ncp/payment/26P3TXNXD2PCE"
-      }
-    };
+  <!-- FORM -->
+  <div class="card">
+    <h2>2) Invia materiale</h2>
 
-    const params = new URLSearchParams(window.location.search);
-    const p = params.get("p") || "TR-29";
-    const data = PAYPAL[p] || PAYPAL["TR-29"];
+    <form
+      action="https://formspree.io/f/xaqnrdae"
+      method="POST">
 
-    document.getElementById("payInfo").textContent = data.label;
-    document.getElementById("payBtn").href = data.url;
-    document.getElementById("prodottoField").value = p;
+      <input type="hidden" name="_subject" value="Nuovo ordine — ClearOps Studio">
+      <input type="hidden" name="_template" value="table">
+      <input type="hidden" name="_redirect" id="redirectField">
+      <input type="hidden" name="prodotto" id="prodottoField">
 
-    // Redirect post-invio: URL COMPLETO e file minuscolo "grazie.html"
-    document.getElementById("redirectField").value =
-      "https://matbon99.github.io/clearops-studio/grazie.html?p=" + encodeURIComponent(p);
-  </script>
+      <div class="row">
+        <div>
+          <label for="nome">Nome</label>
+          <input id="nome" name="nome" required placeholder="Il tuo nome">
+        </div>
+        <div>
+          <label for="email">Email</label>
+          <input id="email" type="email" name="email" required placeholder="nome@azienda.com">
+        </div>
+      </div>
+
+      <label for="contenuto">Testo / istruzioni (incolla qui)</label>
+      <textarea
+        id="contenuto"
+        name="contenuto"
+        required
+        placeholder="Incolla il testo oppure descrivi cosa vuoi ottenere…"></textarea>
+
+      <label for="filelink">Link al file (Google Drive / Dropbox / WeTransfer)</label>
+      <input
+        id="filelink"
+        name="filelink"
+        placeholder="https://drive.google.com/..."
+      >
+      <div class="small">
+        Carica il file su Drive / Dropbox / WeTransfer e assicurati che il link sia accessibile.
+      </div>
+
+      <label for="note">Note extra (opzionale)</label>
+      <textarea
+        id="note"
+        name="note"
+        placeholder="Lingua, tono, obiettivo, scadenza…"></textarea>
+
+      <button class="btn" type="submit">Invia materiale</button>
+      <div class="small" style="margin-top:10px">
+        Dopo l’invio verrai reindirizzato alla pagina “Grazie”.
+      </div>
+    </form>
+  </div>
+
+</div>
+
+<script>
+  const PAYPAL = {
+    "TR-29": {
+      label: "Traduzione 1 pagina — €29 (ID: TR-29)",
+      url: "https://www.paypal.com/ncp/payment/PJ5NPKYTZCXHA"
+    },
+    "RW-39": {
+      label: "Riscrittura 1 pagina — €39 (ID: RW-39)",
+      url: "https://www.paypal.com/ncp/payment/26P3TXNXD2PCE"
+    }
+  };
+
+  const params = new URLSearchParams(window.location.search);
+  const p = params.get("p") || "TR-29";
+  const data = PAYPAL[p] || PAYPAL["TR-29"];
+
+  document.getElementById("payInfo").textContent = data.label;
+  document.getElementById("payBtn").href = data.url;
+  document.getElementById("prodottoField").value = p;
+
+  document.getElementById("redirectField").value =
+    "https://matbon99.github.io/clearops-studio/grazie.html?p=" + encodeURIComponent(p);
+</script>
+
 </body>
 </html>
