@@ -3,130 +3,55 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>ClearOps Studio — Ordine</title>
-
+  <title>WOT Boost Lab — Ordine</title>
   <style>
-    :root{
-      --bg:#0b0f1a;
-      --card:#121a2b;
-      --text:#e8eefc;
-      --muted:#a9b6d6;
-      --border:rgba(255,255,255,.10);
-      --r:16px;
-    }
-    body{
-      margin:0;
-      font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
-      background:var(--bg);
-      color:var(--text);
-      line-height:1.5;
-    }
-    .wrap{max-width:900px;margin:0 auto;padding:24px}
-    .card{
-      background:var(--card);
-      border:1px solid var(--border);
-      border-radius:var(--r);
-      padding:18px;
-      margin:14px 0;
-    }
+    :root{--bg:#0b0f1a;--card:#121a2b;--text:#e8eefc;--muted:#a9b6d6;--border:rgba(255,255,255,.10);--r:16px;}
+    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:var(--bg);color:var(--text);line-height:1.5}
+    .wrap{max-width:920px;margin:0 auto;padding:24px}
+    .card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:18px;margin:14px 0}
     h1,h2{margin:0 0 10px}
     p{margin:0 0 12px;color:var(--muted)}
-    label{
-      display:block;
-      margin:12px 0 6px;
-      color:var(--muted);
-      font-size:13px;
-    }
-    input,textarea{
-      width:100%;
-      padding:12px;
-      border-radius:12px;
-      border:1px solid var(--border);
-      background:rgba(255,255,255,.04);
-      color:var(--text);
-      outline:none;
-    }
-    textarea{min-height:140px;resize:vertical}
+    label{display:block;margin:12px 0 6px;color:var(--muted);font-size:13px}
+    input,textarea,select{width:100%;padding:12px;border-radius:12px;border:1px solid var(--border);background:rgba(255,255,255,.04);color:var(--text);outline:none}
+    textarea{min-height:120px;resize:vertical}
     .row{display:grid;gap:12px}
-    @media(min-width:820px){.row{grid-template-columns:1fr 1fr}}
-    .btn{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      padding:12px 14px;
-      border-radius:12px;
-      border:1px solid var(--border);
-      background:rgba(255,255,255,.06);
-      color:var(--text);
-      cursor:pointer;
-      font-weight:700;
-      text-decoration:none;
-    }
-    .btn.primary{
-      border:none;
-      background:linear-gradient(135deg,#6ea8fe,#9a7bff);
-      color:#0b0f1a;
-    }
+    @media(min-width:860px){.row{grid-template-columns:1fr 1fr}}
+    .btn{display:inline-flex;align-items:center;justify-content:center;padding:12px 14px;border-radius:12px;border:1px solid var(--border);background:rgba(255,255,255,.06);color:var(--text);cursor:pointer;font-weight:800;text-decoration:none}
+    .btn.primary{border:none;background:linear-gradient(135deg,#6ea8fe,#9a7bff);color:#0b0f1a}
     .small{font-size:13px;color:var(--muted)}
-    .note{
-      padding:12px;
-      border-radius:12px;
-      border:1px solid rgba(255,195,66,.35);
-      background:rgba(255,195,66,.08);
-      color:var(--muted);
-    }
-    .ok{
-      padding:12px;
-      border-radius:12px;
-      border:1px solid rgba(126,231,135,.35);
-      background:rgba(126,231,135,.08);
-      color:var(--muted);
-    }
+    .note{padding:12px;border-radius:12px;border:1px solid rgba(255,195,66,.35);background:rgba(255,195,66,.08);color:var(--muted)}
+    .ok{padding:12px;border-radius:12px;border:1px solid rgba(126,231,135,.35);background:rgba(126,231,135,.08);color:var(--muted)}
   </style>
 </head>
-
 <body>
 <div class="wrap">
-
-  <!-- HEADER -->
   <div class="card">
-    <h1>Ordina il tuo servizio</h1>
-    <p>
-      1) Paga con PayPal • 2) Invia testo o link al file • 3) Consegna tipica: 48h
-    </p>
-    <div class="note">
-      <b>Importante:</b> l’ordine parte solo dopo il pagamento PayPal.
-    </div>
-    <p class="small" style="margin-top:10px">
-      <a class="btn" href="index.html">← Torna alla home</a>
-    </p>
+    <h1>Ordine</h1>
+    <p>Compila i dettagli (tank/obiettivo/orari), poi paga. La sessione avviene su Discord in plotone o review.</p>
+    <div class="note"><b>Account safety:</b> non chiediamo password o accesso all’account.</div>
+    <p class="small" style="margin-top:10px"><a class="btn" href="index.html">← Torna alla home</a></p>
   </div>
 
-  <!-- PAGAMENTO -->
   <div class="card">
-    <h2>1) Pagamento PayPal</h2>
-    <p class="small" id="payInfo"></p>
-    <a id="payBtn" class="btn primary" target="_blank" rel="noopener">
-      Paga con PayPal
-    </a>
+    <h2>Pagamento</h2>
+    <p class="small" id="payInfo">Seleziona un prodotto</p>
+    <!-- Metti qui i tuoi link PayPal/Stripe. Per ora placeholder -->
+    <a id="payBtn" class="btn primary" href="#" target="_blank" rel="noopener">Paga ora</a>
     <div class="ok" style="margin-top:12px">
-      Dopo il pagamento, torna qui e invia il materiale
-      (oppure invialo subito: iniziamo solo dopo pagamento).
+      Dopo il pagamento, ti contattiamo via email per fissare orario e Discord.
+    </div>
+    <div class="small" style="margin-top:10px">
+      (Qui devi incollare i tuoi link PayPal per ogni prodotto, come hai fatto prima.)
     </div>
   </div>
 
-  <!-- FORM -->
   <div class="card">
-    <h2>2) Invia materiale</h2>
-
-    <form
-      action="https://formspree.io/f/xaqnrdae"
-      method="POST">
-
-      <input type="hidden" name="_subject" value="Nuovo ordine — ClearOps Studio">
+    <h2>Invia dettagli</h2>
+    <form action="https://formspree.io/f/xaqnrdae" method="POST">
+      <input type="hidden" name="_subject" value="Nuovo ordine WoT — WOT Boost Lab">
       <input type="hidden" name="_template" value="table">
       <input type="hidden" name="_redirect" id="redirectField">
-      <input type="hidden" name="prodotto" id="prodottoField">
+      <input type="hidden" name="product_id" id="productField">
 
       <div class="row">
         <div>
@@ -139,61 +64,62 @@
         </div>
       </div>
 
-      <label for="contenuto">Testo / istruzioni (incolla qui)</label>
-      <textarea
-        id="contenuto"
-        name="contenuto"
-        required
-        placeholder="Incolla il testo oppure descrivi cosa vuoi ottenere…"></textarea>
-
-      <label for="filelink">Link al file (Google Drive / Dropbox / WeTransfer)</label>
-      <input
-        id="filelink"
-        name="filelink"
-        placeholder="https://drive.google.com/..."
-      >
-      <div class="small">
-        Carica il file su Drive / Dropbox / WeTransfer e assicurati che il link sia accessibile.
+      <div class="row">
+        <div>
+          <label for="server">Server</label>
+          <select id="server" name="server" required>
+            <option value="" selected disabled>Seleziona…</option>
+            <option>EU</option>
+            <option>NA</option>
+            <option>ASIA</option>
+          </select>
+        </div>
+        <div>
+          <label for="timezone">Fuso orario</label>
+          <input id="timezone" name="timezone" placeholder="Es. CET/CEST">
+        </div>
       </div>
 
-      <label for="note">Note extra (opzionale)</label>
-      <textarea
-        id="note"
-        name="note"
-        placeholder="Lingua, tono, obiettivo, scadenza…"></textarea>
+      <label for="tankpool">Tank / ruolo / tier (se rilevante)</label>
+      <textarea id="tankpool" name="tankpool" placeholder="Es. medium T8, preferisco mappe aperte, ecc."></textarea>
 
-      <button class="btn" type="submit">Invia materiale</button>
-      <div class="small" style="margin-top:10px">
-        Dopo l’invio verrai reindirizzato alla pagina “Grazie”.
-      </div>
+      <label for="goal">Obiettivo</label>
+      <textarea id="goal" name="goal" required placeholder="Es. aumentare WR, farm crediti, farm exp, imparare posizioni, ecc."></textarea>
+
+      <label for="availability">Disponibilità (giorni/orari)</label>
+      <input id="availability" name="availability" placeholder="Es. lun-ven 19:00–22:00">
+
+      <label for="replaylink">Link replay / stats (opzionale)</label>
+      <input id="replaylink" name="replaylink" placeholder="Link Drive/Dropbox/WeTransfer o profilo stats">
+
+      <button class="btn" type="submit">Invia richiesta</button>
+      <div class="small" style="margin-top:10px">Dopo l’invio vai su “Grazie”.</div>
     </form>
   </div>
-
 </div>
 
 <script>
-  const PAYPAL = {
-    "TR-29": {
-      label: "Traduzione 1 pagina — €29 (ID: TR-29)",
-      url: "https://www.paypal.com/ncp/payment/PJ5NPKYTZCXHA"
-    },
-    "RW-39": {
-      label: "Riscrittura 1 pagina — €39 (ID: RW-39)",
-      url: "https://www.paypal.com/ncp/payment/26P3TXNXD2PCE"
-    }
+  // IMPORTANTE: qui devi incollare i link di pagamento per ogni prodotto (PayPal/Stripe).
+  // Ora metto placeholder; appena mi dai i link, li inserisco.
+  const PAY = {
+    "PLT-1H": { label: "Platoon Pro — 1 ora (€19)", url: "PASTE_PAY_LINK_PLT_1H" },
+    "CRD-2H": { label: "Credit Farming — 2 ore (€29)", url: "PASTE_PAY_LINK_CRD_2H" },
+    "XP-2H":  { label: "XP / Crew Farming — 2 ore (€29)", url: "PASTE_PAY_LINK_XP_2H" },
+    "REV-5":  { label: "Replay Review — 5 replay (€25)", url: "PASTE_PAY_LINK_REV_5" },
+    "PLAN-7D":{ label: "Stat Boost Plan — 7 giorni (€39)", url: "PASTE_PAY_LINK_PLAN_7D" },
+    "CUSTOM": { label: "Custom Session (da €10)", url: "PASTE_PAY_LINK_CUSTOM" }
   };
 
   const params = new URLSearchParams(window.location.search);
-  const p = params.get("p") || "TR-29";
-  const data = PAYPAL[p] || PAYPAL["TR-29"];
+  const p = params.get("p") || "PLT-1H";
+  const data = PAY[p] || PAY["PLT-1H"];
 
   document.getElementById("payInfo").textContent = data.label;
   document.getElementById("payBtn").href = data.url;
-  document.getElementById("prodottoField").value = p;
+  document.getElementById("productField").value = p;
 
   document.getElementById("redirectField").value =
     "https://matbon99.github.io/clearops-studio/grazie.html?p=" + encodeURIComponent(p);
 </script>
-
 </body>
 </html>
