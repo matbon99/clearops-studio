@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ricerca Lavoro - Demo</title>
+  <!-- Meta viewport rende il layout adattabile ai dispositivi mobili -->
+  <style>
+    /* ====== Stili di base e layout responsivo ====== */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0; 
+      padding: 20px;
+      background: #f9f9f9;
+    }
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+    form {
+      max-width: 600px;
+      margin: 0 auto 20px auto; /* centrato con margini auto */
+      background: #fff;
+      padding: 15px;
+      border-radius: 5px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    .form-row {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 1em;               /* spaziatura tra campi */
+      margin-bottom: 1em;
+    }
+    .form-row label {
+      font-weight: bold;
+      margin-bottom: 4px;
+      display: block;
+    }
+    .form-field {
+      flex: 1 0 48%;          /* larghezza ~48% per colonne affiancate */
+    }
+    .form-field.full {
+      flex: 1 0 100%;         /* larghezza piena per campi singoli */
+    }
+    .form-field input, .form-field select, .form-field textarea {
+      width: 100%;
+      padding: 8px;
+      box-sizing: border-box;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      background: #28a745;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+    }
+    button:hover {
+      background: #218838;
+    }
+
+    /* Testo piccolo per note/crediti */
+    .small-text {
+      font-size: 0.9em;
+      color: #666;
+    }
+
+    /* Sezione risultati */
+    #results {
+      max-width: 600px;
+      margin: 0 auto;
+      list-style: none;
+      padding: 0;
+    }
+    #results li {
+      background: #fff;
+      margin-bottom: 15px;
+      padding: 15px;
+      border-radius: 5px;
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+    }
+    #results li h3 {
+      margin: 0 0 5px;
+      font-size: 18px;
+    }
+    #results li p {
+      margin: 0;
+      color: #555;
+    }
+    #results li p span {
+      display: inline-block;
+      margin-right: 10px;
+    }
+    /* Credito Adzuna */
+    .adzuna-credit {
+      text-align: center;
+      font-size: 0.9em;
+      color: #666;
+      margin-top: 10px;
+    }
+
+    /* Responsive: schermi piccoli */
+    @media (max-width: 600px) {
+      .form-row {
+        flex-direction: column;   /* impila i campi verticalmente */
+      }
+      .form-field {
+        flex: 1 0 100% !important;
+      }
+      button {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Trova il tuo prossimo lavoro</h1>
+
+  <!-- ====== Form di ricerca lavoro ====== -->
+  <form id="jobForm">
+    <!-- Riga 1: Nome e Email -->
+    <div class="form-row">
+      <div class="form-field">
+        <label for="name">Nome</label>
+        <input type="text" id="name" name="name" placeholder="Il tuo nome" required />
+      </div>
+      <div class="form-field">
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" placeholder="la tua email" required />
+      </div>
+    </div>
+
+    <!-- Riga 2: Località e Disponibilità -->
+    <div class="form-row">
+      <div class="form-field">
+        <label for="location">Località</label>
+        <input type="text" id="location" name="location" placeholder="Es: Milano" />
+      </div>
+      <div class="form-field">
+        <label for="availability">Disponibilità</label>
+        <select id="availability" name="availability">
+          <option value="">Qualsiasi</option>
+          <option value="full-time">Full-time</option>
+          <option value="part-time">Part-time</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Riga 3: Ruolo desiderato e Anni di esperienza -->
+    <div class="form-row">
+      <div class="form-field">
+        <label for="role">Ruolo desiderato</label>
+        <input type="text" id="role" name="role" placeholder="Posizione lavorativa cercata" />
+      </div>
+      <div class="form-field">
+        <label for="experience">Anni di esperienza</label>
+        <input type="number" id="experience" name="experience" min="0" max="50" placeholder="Es: 3" />
+      </div>
+    </div>
+
+    <!-- Riga 4: Competenze (full width) -->
+    <div class="form-row">
+      <div class="form-field full">
+        <label for="skills">Competenze</label>
+        <input type="text" id="skills" name="skills" placeholder="Competenze (es: Java, Excel, Team management)" />
+      </div>
+    </div>
+
+    <!-- Riga 5: Upload CV (opzionale) -->
+    <div class="form-row">
+      <div class="form-field full">
+        <label for="cv">CV (facoltativo)</label>
+        <input type="file" id="cv" name="cv" />
+        <!-- Nota: senza backend, il CV non verrà effettivamente caricato. -->
+      </div>
+    </div>
+
+    <!-- Pulsante Cerca Lavoro -->
+    <div class="form-row">
+      <button type="submit" id="searchBtn">Cerca Lavoro</button>
+    </div>
+
+    <!-- Testo di feedback/errore (vuoto inizialmente) -->
+    <p id="feedback" class="small-text"></p>
+  </form>
+
+  <!-- ====== Sezione risultati ====== -->
+  <ul id="results"></ul>
+  <p class="adzuna-credit">Offerte di lavoro fornite da <a href="https://www.adzuna.it" target="_blank">Adzuna</a></p>
+
+  <!-- ====== Script JS ====== -->
+  <script>
+    // Inserisci qui le tue credenziali API di Adzuna (dopo averle ottenute registrandoti):
+    const ADZUNA_APP_ID = "YOUR_ADZUNA_APP_ID";   // <== Incolla il tuo app_id
+    const ADZUNA_APP_KEY = "YOUR_ADZUNA_APP_KEY"; // <== Incolla il tuo app_key
+
+    // Opzioni configurabili
+    const COUNTRY = "it";               // Codice paese per la ricerca (es: "it" per Italia, "gb" per UK, "us" per USA, ecc.):contentReference[oaicite:3]{index=3}
+    const RESULTS_PER_PAGE = 10;        // Numero di risultati da mostrare per ricerca
+
+    // Riferimenti a elementi del DOM
+    const jobForm = document.getElementById("jobForm");
+    const resultsList = document.getElementById("results");
+    const feedbackEl = document.getElementById("feedback");
+
+    // Gestore dell'evento submit del form
+    jobForm.addEventListener("submit", function(event) {
+      event.preventDefault(); // Evita il refresh della pagina
+
+      // Leggi i valori inseriti dall'utente nei campi del form
+      const name = document.getElementById("name").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const location = document.getElementById("location").value.trim();
+      const availability = document.getElementById("availability").value;
+      const role = document.getElementById("role").value.trim();
+      const experience = document.getElementById("experience").value.trim();
+      const skills = document.getElementById("skills").value.trim();
+      // Nota: il CV non viene elaborato perché non abbiamo backend
+
+      // Costruisci i parametri di ricerca (parola chiave "what" combinando ruolo e competenze)
+      let whatQuery = "";
+      if (role) whatQuery += role;
+      if (skills) {
+        // aggiungi anche le competenze alla query (se entrambe presenti, separate da spazio)
+        whatQuery += (whatQuery ? " " : "") + skills;
+      }
+
+      // Prepara l'URL della richiesta API a Adzuna
+      let apiUrl = `https://api.adzuna.com/v1/api/jobs/${COUNTRY}/search/1?` +
+                   `app_id=${ADZUNA_APP_ID}&app_key=${ADZUNA_APP_KEY}` +
+                   `&results_per_page=${RESULTS_PER_PAGE}` +
+                   `&content-type=application/json`;
+      if (whatQuery) {
+        apiUrl += `&what=${encodeURIComponent(whatQuery)}`;
+      }
+      if (location) {
+        apiUrl += `&where=${encodeURIComponent(location)}`;
+      }
+      if (availability === "full-time") {
+        apiUrl += `&full_time=1`;
+      } else if (availability === "part-time") {
+        apiUrl += `&part_time=1`;
+      }
+      // (Anni di esperienza non direttamente utilizzato nell'API; potrebbe essere usato per filtrare risultati localmente se necessario)
+
+      // Mostra un messaggio di caricamento all'utente
+      feedbackEl.textContent = "Ricerca in corso. Attendere prego...";
+      resultsList.innerHTML = ""; // svuota risultati precedenti
+
+      // Effettua la chiamata API usando fetch
+      fetch(apiUrl)
+        .then(response => {
+          if (!response.ok) {
+            throw new Error("Errore nella risposta dal server (status " + response.status + ")");
+          }
+          return response.json();
+        })
+        .then(data => {
+          // Svuota eventuale messaggio di feedback
+          feedbackEl.textContent = "";
+          resultsList.innerHTML = ""; // pulisci risultati precedenti
+
+          // Verifica se ci sono risultati
+          const jobs = data.results;
+          if (!jobs || jobs.length === 0) {
+            feedbackEl.textContent = "Nessun risultato trovato. Prova a modificare i criteri di ricerca.";
+            return;
+          }
+
+          // Per ogni offerta di lavoro trovata, crea un elemento nell'elenco risultati
+          jobs.forEach(job => {
+            // Estrai le informazioni utili (con fallback nel caso manchino alcuni campi)
+            const title = job.title || "Titolo non disponibile";
+            const company = job.company ? job.company.display_name : "Azienda non specificata";
+            const location = job.location ? job.location.display_name : "Località non disponibile";
+            const url = job.redirect_url || "#";
+
+            // Crea elementi HTML per il risultato
+            const li = document.createElement("li");
+            const titleEl = document.createElement("h3");
+            const linkEl = document.createElement("a");
+            linkEl.href = url;
+            linkEl.target = "_blank";            // apre il link in una nuova scheda
+            linkEl.textContent = title;
+            titleEl.appendChild(linkEl);
+            const infoEl = document.createElement("p");
+            infoEl.innerHTML = `<span><strong>Azienda:</strong> ${company}</span> <span><strong>Località:</strong> ${location}</span>`;
+            // Assembla il risultato
+            li.appendChild(titleEl);
+            li.appendChild(infoEl);
+            resultsList.appendChild(li);
+          });
+        })
+        .catch(error => {
+          // Gestione errori: mostra il messaggio di errore all'utente
+          feedbackEl.textContent = "Si è verificato un errore durante la ricerca: " + error.message;
+          console.error("Errore nella chiamata API:", error);
+        });
+    });
+  </script>
+</body>
+</html>
